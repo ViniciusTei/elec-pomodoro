@@ -6,6 +6,11 @@ let interval = 0;
 let onStart = false;
 let isModalOpen = false;
 
+//config variables
+let defaultFocus = 25
+let defaultRest = 5
+
+
 onInit()
 
 function onInit() {
@@ -66,12 +71,12 @@ function decreaseTime(currIndex) {
   if(currSec == 0 && currMinute == 0) {
     if(currIndex == 0) {
       currentLabelIndex = 1
-      currMinute = 5
+      currMinute = defaultRest
       currSec = 0
       injectLabel()
     } else {
       currentLabelIndex = 0
-      currMinute = 25
+      currMinute = defaultFocus
       currSec = 0
       injectLabel()
     }
@@ -89,4 +94,20 @@ document.getElementById('config').addEventListener('click', () => toggleModal())
 function toggleModal() {
   document.getElementById('modal').style.display = isModalOpen ? 'none' : 'block' 
   isModalOpen = !isModalOpen
+  if(isModalOpen) {
+    document.getElementById('foco').value = defaultFocus
+    document.getElementById('descanso').value = defaultRest
+  }
 }
+
+document.getElementById('modal-btn').addEventListener('click', () => {
+  defaultFocus = document.getElementById('foco').value
+  defaultRest = document.getElementById('descanso').value
+  currMinute = defaultFocus
+  currentLabelIndex = 0
+  document.getElementById('modal-btn').innerHTML = '...'
+  setTimeout(() => {
+    document.getElementById('modal-btn').innerHTML = 'Salvo'
+    document.getElementById('modal-btn').disabled = true
+  }, 1000)
+})
