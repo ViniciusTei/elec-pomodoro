@@ -1,0 +1,17 @@
+.modal {
+  width: 300px;
+  height: 200px;
+  background: #cccccc;
+  border-radius: 8px;
+  color: #0D0D16;
+  position: fixed;
+  top: 95px;
+  left: 2rem;
+  padding: 1rem;
+  display: none;
+}
+
+.modal span {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+}

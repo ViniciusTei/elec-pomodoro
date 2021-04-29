@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="modal.css">
 </head>
 <body>
     <header>
@@ -16,17 +17,39 @@
     </header>
     <main>
       <div class="head">
-        <img src="../assets/settings.png" alt="configuração">
-        <p>Hora de focar 😎</p>
+        <div id="config">
+          <img  src="../assets/settings.png" alt="configuração">
+
+        </div>
+        <p id="info-label"></p>
       </div>
       <div class="time">
-        25:00
+        Bora?
       </div>
       <div class="buttons-container">
-        <button onclick="onZerar()">Zerar</button>
-        <button onclick="onStart()">Start</button>
+        <button id="btn-stop" onclick="handleZerar()">Parar</button>
+        <button id="btn-start" onclick="handleStart()" >Start</button>
       </div>
     </main>
+    <div id="modal" class="modal">
+      <span>Configurações</span>
+      <p>Aqui voce pode definir suas configurações</p>
+      <ul>
+        <li>
+          <label for="">Tempo de foco</label>
+          <input type="number">
+        </li>
+        <li>
+          <label for="">Tempo de descanso</label>
+          <input type="number">
+        </li>
+        <li>
+          <label for="">Descanso longo</label>
+          <input type="number" placeholder="minutos">
+          <input type="number" placeholder="pausar">
+        </li>
+      </ul>
+    </div>
     <script src="index.js"></script>
 </body>
 </html>
