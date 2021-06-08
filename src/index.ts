@@ -2,14 +2,13 @@ const labels = ['Hora de focar 😎', 'Hora de descansar 😴']
 let currentLabelIndex = 0;
 let currMinute = 25;
 let currSec = 0;
-let interval = 0;
+let interval: NodeJS.Timeout;
 let onStart = false;
 let isModalOpen = false;
 
 //config variables
 let defaultFocus = 25
 let defaultRest = 5
-
 
 onInit()
 
@@ -27,18 +26,18 @@ function injectTime() {
 }
 
 function injectLabel() {
-  const label = document.getElementById('info-label')
-  label.innerHTML = labels[currentLabelIndex]
+  document.getElementById('info-label')!.innerHTML = labels[currentLabelIndex]
+  
 }
 
 function injectBtnLabels() {
   const btnStart = document.getElementById('btn-start')
   const btnStop = document.getElementById('btn-stop')
   if(onStart) {
-    btnStart.innerHTML = 'Pausar'
-    btnStop.innerHTML = 'Parar'
+    btnStart!.innerHTML = 'Pausar'
+    btnStop!.innerHTML = 'Parar'
   } else {
-    btnStart.innerHTML = 'Start'
+    btnStart!.innerHTML = 'Start'
   }
 }
 
@@ -67,7 +66,7 @@ function handleStart() {
   }
 }
 
-function decreaseTime(currIndex) {
+function decreaseTime(currIndex: number) {
   if(currSec == 0 && currMinute == 0) {
     if(currIndex == 0) {
       currentLabelIndex = 1
@@ -89,25 +88,32 @@ function decreaseTime(currIndex) {
   }
 }
 
-document.getElementById('config').addEventListener('click', () => toggleModal())
+document.getElementById('config')?.addEventListener('click', () => toggleModal())
 
 function toggleModal() {
-  document.getElementById('modal').style.display = isModalOpen ? 'none' : 'block' 
+  document.getElementById('modal')!.style.display = isModalOpen ? 'none' : 'block' 
   isModalOpen = !isModalOpen
   if(isModalOpen) {
-    document.getElementById('foco').value = defaultFocus
-    document.getElementById('descanso').value = defaultRest
+    const modalButton = <HTMLButtonElement> document.getElementById('modal-btn')
+    const inputFoco = <HTMLInputElement> document.getElementById("foco");
+    const inputDescanso = <HTMLInputElement> document.getElementById("descanso");
+    modalButton!.disabled = false
+    inputFoco!.value = defaultFocus.toString()
+    inputDescanso!.value = defaultRest.toString()
   }
 }
 
-document.getElementById('modal-btn').addEventListener('click', () => {
-  defaultFocus = document.getElementById('foco').value
-  defaultRest = document.getElementById('descanso').value
+document.getElementById('modal-btn')!.addEventListener('click', () => {
+  const inputFoco = <HTMLInputElement> document.getElementById("foco");
+  const inputDescanso = <HTMLInputElement> document.getElementById("descanso");
+  const modalButton = <HTMLButtonElement> document.getElementById('modal-btn')
+  defaultFocus = Number(inputFoco!.value)
+  defaultRest = Number(inputDescanso!.value)
   currMinute = defaultFocus
   currentLabelIndex = 0
-  document.getElementById('modal-btn').innerHTML = '...'
+  modalButton!.innerHTML = '...'
   setTimeout(() => {
-    document.getElementById('modal-btn').innerHTML = 'Salvo'
-    document.getElementById('modal-btn').disabled = true
+    modalButton!.innerHTML = 'Salvo'
+    modalButton!.disabled = true
   }, 1000)
 })

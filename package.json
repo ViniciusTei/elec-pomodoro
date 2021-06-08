@@ -2,15 +2,20 @@
   "name": "elec-pomodoro",
   "version": "1.0.0",
   "description": "My pomodoro electron app.",
-  "main": "main.js",
+  "main": "dist/main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ."
+    "start": "npm run compile && electron ./dist/main.js",
+    "compile": "tsc && copyfiles -f src/index.html dist"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "copyfiles": "^2.4.1",
     "electron": "^12.0.5"
+  },
+  "devDependencies": {
+    "typescript": "^4.2.4"
   }
 }
