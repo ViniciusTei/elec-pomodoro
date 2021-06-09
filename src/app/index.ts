@@ -1,3 +1,5 @@
+import { createAudioElement } from "./audio";
+
 const labels = ['Hora de focar 😎', 'Hora de descansar 😴']
 let currentLabelIndex = 0;
 let currMinute = 25;
@@ -23,6 +25,7 @@ function injectTime() {
     let label = `${currMinute}:${currSec}`
     div[0].innerHTML = label
   }
+
 }
 
 function injectLabel() {
@@ -55,7 +58,7 @@ function handleStart() {
   onStart = !onStart
   if(onStart) {
     interval = setInterval(() => {
-      decreaseTime(currentLabelIndex)
+      decreaseTime(currentLabelIndex, !onStart)
       injectTime()
       injectBtnLabels()
     }, 1000)
@@ -66,14 +69,24 @@ function handleStart() {
   }
 }
 
-function decreaseTime(currIndex: number) {
+function decreaseTime(currIndex: number, alarm?: boolean) {
   if(currSec == 0 && currMinute == 0) {
     if(currIndex == 0) {
+      // seta hora de descansar
+      // deve ativar o alarme
       currentLabelIndex = 1
       currMinute = defaultRest
       currSec = 0
+
       injectLabel()
+      if(alarm) {
+        const div = document.getElementsByClassName('time')
+        const audio = createAudioElement()
+        div[0].appendChild(audio)
+      }
+      
     } else {
+      // seta hora de focar
       currentLabelIndex = 0
       currMinute = defaultFocus
       currSec = 0
