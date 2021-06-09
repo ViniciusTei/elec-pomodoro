@@ -2,8 +2,8 @@
 
 A pomodoro app powered by electron and typescript.
 
-## Utilizando
-Clone o repositorio na sua maquina e rode os comandos abaixo.
+## Using
+Clone the repo and run the scripts below.
 ```bash
 npm install
 npm start 
