@@ -1,10 +1,13 @@
 import { Tray, nativeImage } from 'electron';
+import { BrowserWindow } from 'electron/main';
 import * as path from 'path';
 
-export function createTray() {
+export function createTray(win: BrowserWindow) {
     const image_path = path.resolve(__dirname, '../', 'assets', 'tomate-icon.png')
     const tray = new Tray(nativeImage.createFromPath(image_path))
-    tray.setToolTip('Best pomodoro app')
+    tray.on('click', () => {
+      win.show()
+    })
     return tray
 }
 

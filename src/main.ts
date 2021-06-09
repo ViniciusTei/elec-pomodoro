@@ -1,9 +1,11 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, Tray } from 'electron';
 import { createTray } from './tray';
 import * as path from 'path';
-let tray = null
+
+let tray: Tray = null
+let win: BrowserWindow = null
 function createWindow () {
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 600,
     height: 400,
     autoHideMenuBar: true
@@ -17,13 +19,13 @@ app.setUserTasks([])
 
 app.on('ready', () => {
   createWindow()
-  tray = createTray()
+  tray = createTray(win)
   
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow()
-      createTray()
+      tray = createTray(win)
     }
   })
 })
